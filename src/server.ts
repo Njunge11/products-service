@@ -1,21 +1,21 @@
 import 'dotenv/config';
 import express from 'express';
-import { Sequelize } from 'sequelize/types';
 import Database from './utils/db';
+import CategoryRouter from './resources/category/category.router';
 
 export default class Server {
-    private app: express.Application;
+    private app;
     private PORT = 3000;
-    private connect: Sequelize;
+    private connect;
+    private categoryRouter;
     constructor() {
         this.app = express();
         this.connect = new Database().connect();
+        this.categoryRouter = new CategoryRouter();
     }
 
     private routeRequests(): void {
-        this.app.get('/', (req: express.Request, res: express.Response) => {
-            res.status(200).send('Helsdsdsds dloworldd');
-        });
+        this.app.use('/api/v1/', this.categoryRouter.Router);
     }
 
     public startServer = async (): Promise<void> => {
