@@ -1,5 +1,4 @@
 import Server from './server';
 
-const start =
-    new Server();
-start.startServer();
+const server = new Server();
+server.startServer();
