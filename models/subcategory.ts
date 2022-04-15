@@ -1,7 +1,8 @@
 'use strict';
-import { Model, Sequelize } from 'sequelize';
+
+import { Sequelize, Model } from 'sequelize';
 export default (sequelize: Sequelize, DataTypes: any) => {
-    class subCategories extends Model {
+    class SubCategory extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -11,10 +12,10 @@ export default (sequelize: Sequelize, DataTypes: any) => {
             // define association here
         }
     }
-    subCategories.init(
+    SubCategory.init(
         {
             id: { primaryKey: true, type: DataTypes.UUID },
-            parentCategoryId: DataTypes.UUID,
+            parentId: DataTypes.UUID,
             categoryName: DataTypes.STRING,
         },
         {
@@ -22,5 +23,6 @@ export default (sequelize: Sequelize, DataTypes: any) => {
             modelName: 'subCategories',
         }
     );
-    return subCategories;
+
+    return SubCategory;
 };

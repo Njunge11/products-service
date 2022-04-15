@@ -1,0 +1,239 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Products REST and GraphQL API",
+        "description": "A simple API that fetches products and categories",
+        "contact": { "name": "Njunge Njenga", "email": "njungedev@gmail.com" },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1",
+            "description": "Testing Server"
+        }
+    ],
+    "paths": {
+        "/categories": {
+            "description": "Returns all the categroies",
+            "get": {
+                "tags": ["Categories"],
+                "description": "Returns all the product categroies",
+                "parameters": [
+                    {
+                        "name": "parentId",
+                        "in": "query",
+                        "description": "ID of the parent category to fetch all it's child categories",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["GraphQL Categories"],
+                "description": "Returns all the product categroies. Use {categories {getCategories {id categoryName createdAt updatedAt}}}.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "query": {
+                                        "description": "1. {categories {getCategories {id categoryName createdAt updatedAt}}}\n\n2. {categories{getCategories(parentId:PARENT_ID){id categoryName createdAt updatedAt}}}",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["query"]
+                            },
+                            "examples": {
+                                "query": {
+                                    "summary": "Examples of the GraphQL query JSON object",
+                                    "value": {
+                                        "query": " {categories {getCategories {id categoryName createdAt updatedAt}}}"
+                                    }
+                                },
+                                "query1": {
+                                    "summary": "Examples of the GraphQL query JSON object erer",
+                                    "value": {
+                                        "query": " {categories {getCategories {id categoryName createdAt updatedAt}}} erererer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "http://localhost:3000/graphql",
+                        "description": "The GraphQL server"
+                    }
+                ],
+
+                "responses": {
+                    "200": {
+                        "description": "A list of categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products": {
+            "description": "Returns all the products",
+            "get": {
+                "tags": ["Products"],
+                "description": "Returns all the products",
+                "parameters": [
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "The state of the product. Possible values:['draft', 'deletedDraft', 'available', 'deleted', 'expired', 'reserved', 'sold', 'returned']",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of products",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["GraphQL Products"],
+                "description": "Returns all the product categroies. Use {categories {getCategories {id categoryName createdAt updatedAt}}}.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "query": {
+                                        "description": "1. {categories {getCategories {id categoryName createdAt updatedAt}}}\n\n2. {categories{getCategories(parentId:PARENT_ID){id categoryName createdAt updatedAt}}}",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["query"]
+                            },
+                            "examples": {
+                                "query1": {
+                                    "summary": "Examples of the GraphQL query JSON object",
+                                    "value": {
+                                        "query": " {categories {getCategories {id categoryName createdAt updatedAt}}}"
+                                    }
+                                },
+                                "query2": {
+                                    "summary": "Examples of the GraphQL query JSON object specify the parentId",
+                                    "value": {
+                                        "query": "{categories{getCategories(parentId:PARENT_ID){id categoryName createdAt updatedAt}}}"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "http://localhost:3000/graphql",
+                        "description": "The GraphQL server"
+                    }
+                ],
+
+                "responses": {
+                    "200": {
+                        "description": "A list of categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{productId}": {
+            "put": {
+                "tags": ["Products"],
+                "summary": "Updates the state of a product",
+                "operationId": "updatePetWithForm",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "ID of product that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "state": {
+                                        "description": "Updated state of the product",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["state"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Pet updated.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
