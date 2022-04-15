@@ -10,7 +10,7 @@ export default class CategoryRouter {
     }
 
     get Router() {
-        this.router.get('/', this.categoryController.getCategories);
+        this.router.get('/categories', this.categoryController.getCategories);
         return this.router;
     }
 }

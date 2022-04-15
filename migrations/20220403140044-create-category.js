@@ -1,18 +1,11 @@
 'use strict';
-// eslint-disable-next-line no-undef
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('subCategories', {
+        await queryInterface.createTable('categories', {
             id: {
                 allowNull: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-            },
-            parentCategoryId: {
-                allowNull: false,
-                type: Sequelize.UUID,
-                onDelete: 'CASCADE',
-                references: { model: 'categories', key: 'id' },
             },
             categoryName: {
                 allowNull: false,
@@ -29,6 +22,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('subCategories');
+        await queryInterface.dropTable('categories');
     },
 };
