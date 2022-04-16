@@ -37,7 +37,7 @@ export default class Server {
         this.app.use('/api/v1/', this.categoryRouter.Router);
         this.app.use('/api/v1/', this.productRouter.Router);
         this.app.use(
-            '/api/v1/graphql-server',
+            '/graphql',
             graphqlHTTP({
                 schema: schema,
                 rootValue,

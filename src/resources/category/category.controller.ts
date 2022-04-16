@@ -14,7 +14,7 @@ export default class CategoryController {
         this.subCategories = SubCategory(this.sequelize, Sequelize.DataTypes);
     }
 
-    public fetchCategories = async (parentId: string) => {
+    public fetchCategories = async (parentId: any) => {
         if (parentId) {
             return await this.subCategories.findAll({
                 where: { parentId },
@@ -27,7 +27,8 @@ export default class CategoryController {
         res: express.Response
     ): Promise<express.Response | void> => {
         try {
-            const categories = await this.fetchCategories(req.params.id);
+            const parentId = req.query?.parentId;
+            const categories = await this.fetchCategories(parentId);
             if (categories.length === 0) {
                 return res.status(400).send({ message: 'Data not found' });
             }
