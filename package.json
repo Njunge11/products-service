@@ -24,7 +24,8 @@
         "regenerator-runtime": "^0.13.9",
         "sequelize": "^6.17.0",
         "swagger-ui-express": "^4.3.0",
-        "uuid": "^8.3.2"
+        "uuid": "^8.3.2",
+        "ts-node": "^10.7.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.17.6",
