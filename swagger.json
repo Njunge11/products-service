@@ -1,0 +1,360 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Products REST and GraphQL API",
+        "description": "A simple API that fetches products and categories",
+        "contact": { "name": "Njunge Njenga", "email": "njungedev@gmail.com" },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1",
+            "description": "Testing Server"
+        }
+    ],
+    "paths": {
+        "/categories": {
+            "description": "Returns a list of all the categroies",
+            "get": {
+                "tags": ["Categories"],
+                "summary": "Returns a list of all the categroies",
+                "description": "Returns a list of all the categroies",
+                "parameters": [
+                    {
+                        "name": "parentId",
+                        "in": "query",
+                        "description": "ID of the parent category, used to fetch all it's child categories",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "example": {
+                                    "data": [
+                                        {
+                                            "id": "14b22658-9368-4283-9d1b-70a1fb750053",
+                                            "categoryName": "Computing",
+                                            "createdAt": "2022-04-03T19:27:57.000Z",
+                                            "updatedAt": "2022-04-03T19:27:57.000Z"
+                                        },
+                                        {
+                                            "id": "2dff493d-1a41-465d-b20c-0ad953e19a21",
+                                            "categoryName": "Baby Products",
+                                            "createdAt": "2022-04-03T19:27:57.000Z",
+                                            "updatedAt": "2022-04-03T19:27:57.000Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["GraphQL Categories"],
+                "summary": "Returns a list of all the categroies",
+                "description": "Returns a list of all the product categroies.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "query": {
+                                        "description": "1. {categories {getCategories {id categoryName createdAt updatedAt}}}\n\n2. {categories{getCategories(parentId:PARENT_ID){id categoryName createdAt updatedAt}}}",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["query"]
+                            },
+                            "examples": {
+                                "query": {
+                                    "summary": "Example of the GraphQL query JSON object",
+                                    "value": {
+                                        "query": " {categories {getCategories {id categoryName createdAt updatedAt}}}"
+                                    }
+                                },
+                                "query1": {
+                                    "summary": "Example of the GraphQL query JSON object to fetch child categories (change the parentId)",
+                                    "value": {
+                                        "query": "{categories{getCategories(parentId:\"342ae5e0-6bb7-4641-bd5d-c9826529907f\"){id categoryName createdAt updatedAt}}}"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "http://localhost:3000/graphql",
+                        "description": "The GraphQL server"
+                    }
+                ],
+
+                "responses": {
+                    "200": {
+                        "description": "A list of categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "example": {
+                                    "data": {
+                                        "categories": {
+                                            "getCategories": [
+                                                {
+                                                    "id": "14b22658-9368-4283-9d1b-70a1fb750053",
+                                                    "categoryName": "Computing",
+                                                    "createdAt": "1649014077000",
+                                                    "updatedAt": "1649014077000"
+                                                },
+                                                {
+                                                    "id": "2dff493d-1a41-465d-b20c-0ad953e19a21",
+                                                    "categoryName": "Baby Products",
+                                                    "createdAt": "1649014077000",
+                                                    "updatedAt": "1649014077000"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products": {
+            "description": "Returns all the products",
+            "get": {
+                "tags": ["Products"],
+                "summary": "Returns a list of all the products",
+                "description": "Returns all the products",
+                "parameters": [
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "The state of the product. Possible values:['draft', 'deletedDraft', 'available', 'deleted', 'expired', 'reserved', 'sold', 'returned']",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of products",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "example": {
+                                    "message": {
+                                        "data": [
+                                            {
+                                                "id": "007057c7-2a60-4aea-b460-7512fca88ae8",
+                                                "subCategoryID": "0151ba4d-1766-4914-87a7-2df2545b4c96",
+                                                "productName": "Refined Wooden Bacon",
+                                                "productPrice": "694",
+                                                "productStatus": "draft",
+                                                "createdAt": "2022-04-03T19:27:57.000Z",
+                                                "updatedAt": "2022-04-03T19:27:57.000Z",
+                                                "productImages": [
+                                                    {
+                                                        "id": "21c76c62-aa67-4aaa-9020-4f7051fdf690",
+                                                        "productId": "007057c7-2a60-4aea-b460-7512fca88ae8",
+                                                        "url": "http://loremflickr.com/640/480",
+                                                        "mainImage": true,
+                                                        "createdAt": "2022-04-03T19:28:01.000Z",
+                                                        "updatedAt": "2022-04-03T19:28:01.000Z"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "00716023-82a8-410c-9121-925b5c90bd05",
+                                                "subCategoryID": "91775feb-14db-42d1-b89d-f80985bfcf75",
+                                                "productName": "Generic Steel Mouse",
+                                                "productPrice": "420",
+                                                "productStatus": "draft",
+                                                "createdAt": "2022-04-03T19:27:57.000Z",
+                                                "updatedAt": "2022-04-03T19:27:57.000Z",
+                                                "productImages": [
+                                                    {
+                                                        "id": "070583f7-4ada-4f62-b93e-8823e5510ad3",
+                                                        "productId": "00716023-82a8-410c-9121-925b5c90bd05",
+                                                        "url": "http://loremflickr.com/640/480",
+                                                        "mainImage": true,
+                                                        "createdAt": "2022-04-03T19:28:01.000Z",
+                                                        "updatedAt": "2022-04-03T19:28:01.000Z"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["GraphQL Products"],
+                "summary": "Returns a list of all the products",
+                "description": "Returns all the product categroies. Use {categories {getCategories {id categoryName createdAt updatedAt}}}.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "query": {
+                                        "description": "1. {categories {getCategories {id categoryName createdAt updatedAt}}}\n\n2. {categories{getCategories(parentId:PARENT_ID){id categoryName createdAt updatedAt}}}",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["query"]
+                            },
+                            "examples": {
+                                "query": {
+                                    "summary": "Example of the GraphQL query JSON object to fetch products using the state",
+                                    "value": {
+                                        "query": "{products {getProducts(state:\"draft\") {id subCategoryID productName productPrice productStatus productImages {url}createdAt updatedAt}}}"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "http://localhost:3000/graphql",
+                        "description": "The GraphQL server"
+                    }
+                ],
+
+                "responses": {
+                    "200": {
+                        "description": "A list of categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "example": {
+                                    "data": {
+                                        "products": {
+                                            "getProducts": [
+                                                {
+                                                    "id": "007057c7-2a60-4aea-b460-7512fca88ae8",
+                                                    "subCategoryID": "0151ba4d-1766-4914-87a7-2df2545b4c96",
+                                                    "productName": "Refined Wooden Bacon",
+                                                    "productPrice": "694",
+                                                    "productStatus": "draft",
+                                                    "productImages": [
+                                                        {
+                                                            "url": "http://loremflickr.com/640/480"
+                                                        }
+                                                    ],
+                                                    "createdAt": "1649014077000",
+                                                    "updatedAt": "1649014077000"
+                                                },
+                                                {
+                                                    "id": "00716023-82a8-410c-9121-925b5c90bd05",
+                                                    "subCategoryID": "91775feb-14db-42d1-b89d-f80985bfcf75",
+                                                    "productName": "Generic Steel Mouse",
+                                                    "productPrice": "420",
+                                                    "productStatus": "draft",
+                                                    "productImages": [
+                                                        {
+                                                            "url": "http://loremflickr.com/640/480"
+                                                        }
+                                                    ],
+                                                    "createdAt": "1649014077000",
+                                                    "updatedAt": "1649014077000"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{productId}": {
+            "put": {
+                "tags": ["Products"],
+                "summary": "Update the state of a product",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "ID of product that needs to be updated.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "state": {
+                                        "description": "Updated state of the product",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["state"]
+                            },
+                            "examples": {
+                                "query": {
+                                    "summary": "Example JSON request payload",
+                                    "value": {
+                                        "state": "available"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "State updated.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
