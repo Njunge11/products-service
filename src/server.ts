@@ -50,7 +50,7 @@ export default class Server {
         this.routeRequests();
         try {
             await this.connect.authenticate();
-            console.log(`Database connection successful`);
+            console.log(`Database connection is successful`);
             this.app.listen(this.PORT, () => {
                 console.log(`Server is running on port ${this.PORT}`);
             });
