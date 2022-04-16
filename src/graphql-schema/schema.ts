@@ -19,7 +19,7 @@ export const schema = buildSchema(
             mainImage: Boolean
             }
 
-            type productDataValues {
+            type result {
                 id:String
                 subCategoryID: String
                 productName: String
@@ -29,9 +29,26 @@ export const schema = buildSchema(
                 createdAt: String
                 updatedAt: String
             }
+
+            type nextValues {
+                page:Int
+                limit:Int
+            }
+
+            type previousValues {
+                page:Int
+                limit:Int
+            }
+
+            type response {
+                data:[result]
+                totalCount:Int 
+                next:nextValues
+                previous:previousValues
+            }
           
             type Products {
-                getProducts(state:String):[productDataValues]
+                getProducts(state:String page:String limit:String):response
             }
 
             type Query {

@@ -24,11 +24,25 @@ export default class ProductController {
         this.productImages = ProductImage(this.sequelize, Sequelize.DataTypes);
     }
 
-    public fetchProducts = async (state: any) => {
-        return await this.products.findAll({
+    public fetchProducts = async (state: any, page: number, limit: number) => {
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const result = await this.products.findAll({
             include: { model: this.productImages },
             where: { productStatus: state },
+            offset: page,
+            limit,
         });
+        const count = await this.products.count();
+        // return result;
+        return {
+            data: result,
+            totalCount: count,
+            ...(endIndex < count && {
+                next: { page: page + 1, limit },
+            }),
+            ...(startIndex > 0 && { previous: { page: page - 1, limit } }),
+        };
     };
 
     public getProducts = async (
@@ -37,6 +51,9 @@ export default class ProductController {
     ): Promise<express.Response | void> => {
         try {
             const state = req.query.state;
+            const page = Number(req.query.page);
+            const limit = Number(req.query.limit);
+
             if (!state) {
                 return res.status(400).send({
                     message: `state not provided. Available states: draft, deletedDraft, available, deleted, expired, reserved, sold, returned `,
@@ -44,11 +61,12 @@ export default class ProductController {
             }
 
             // add pagination
-            const products = await this.fetchProducts(state);
-            if (products.length === 0) {
+
+            const products = await this.fetchProducts(state, page, limit);
+            if (products.data.length === 0) {
                 return res.status(400).send({ message: 'Data not found' });
             }
-            res.status(200).send({ message: { data: products } });
+            res.status(200).send(products);
         } catch (error) {
             console.error(error);
             res.status(500).end();

@@ -163,6 +163,24 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The state of the product. Possible values:['draft', 'deletedDraft', 'available', 'deleted', 'expired', 'reserved', 'sold', 'returned']",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The state of the product. Possible values:['draft', 'deletedDraft', 'available', 'deleted', 'expired', 'reserved', 'sold', 'returned']",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -244,7 +262,7 @@
                                 "query": {
                                     "summary": "Example of the GraphQL query JSON object to fetch products using the state",
                                     "value": {
-                                        "query": "{products {getProducts(state:\"draft\") {id subCategoryID productName productPrice productStatus productImages {url}createdAt updatedAt}}}"
+                                        "query": "{products {getProducts(state:\"draft\" page:\"1\" limit:\"10\") {data {id subCategoryID productName productPrice productStatus productImages {url}createdAt updatedAt}next{page limit} previous{page limit}}}}"
                                     }
                                 }
                             }
