@@ -12,8 +12,12 @@
     },
     "servers": [
         {
+            "url": "https://soum-assessment.herokuapp.com/graphql",
+            "description": "Test server"
+        },
+        {
             "url": "http://localhost:3000/api/v1",
-            "description": "Testing Server"
+            "description": "Development Server"
         }
     ],
     "paths": {
@@ -99,6 +103,10 @@
                     }
                 },
                 "servers": [
+                    {
+                        "url": "https://soum-assessment.herokuapp.com/graphql",
+                        "description": "The GraphQL test server"
+                    },
                     {
                         "url": "http://localhost:3000/graphql",
                         "description": "The GraphQL server"
@@ -245,8 +253,12 @@
                 },
                 "servers": [
                     {
+                        "url": "https://soum-assessment.herokuapp.com/graphql",
+                        "description": "The GraphQL test server"
+                    },
+                    {
                         "url": "http://localhost:3000/graphql",
-                        "description": "The GraphQL server"
+                        "description": "The GraphQL development server"
                     }
                 ],
 
