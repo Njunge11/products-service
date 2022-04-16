@@ -12,7 +12,7 @@
     },
     "servers": [
         {
-            "url": "https://soum-assessment.herokuapp.com/graphql",
+            "url": "https://soum-assessment.herokuapp.com/api/v1",
             "description": "Test server"
         },
         {
