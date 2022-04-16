@@ -1,12 +1,11 @@
 'use strict';
-
-import { uniqueId } from 'lodash';
 import { Sequelize, Model } from 'sequelize';
 import ProductImage from './productimage';
 
 export default (sequelize: Sequelize, DataTypes: any) => {
     const productImage = ProductImage(sequelize, DataTypes);
     class Product extends Model {
+        dataValues: any;
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
