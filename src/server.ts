@@ -13,7 +13,7 @@ import helmet from 'helmet';
 
 export default class Server {
     private app;
-    private PORT = 3000;
+    private PORT = process.env.PORT || 3000;
     private connect;
     private categoryRouter;
     private productRouter;
