@@ -30,7 +30,9 @@ export default class CategoryController {
             const parentId = req.query?.parentId;
             const categories = await this.fetchCategories(parentId);
             if (categories.length === 0) {
-                return res.status(400).send({ message: 'Data not found' });
+                return res
+                    .status(400)
+                    .send({ message: 'Data not found using the provided Id' });
             }
             res.status(200).send({ data: categories });
         } catch (error) {
