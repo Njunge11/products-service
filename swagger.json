@@ -309,7 +309,7 @@
                     {
                         "name": "productId",
                         "in": "path",
-                        "description": "ID of product that needs to be updated",
+                        "description": "ID of product that needs to be updated.",
                         "required": true,
                         "schema": {
                             "type": "string"
