@@ -1,18 +1,18 @@
 import { merge } from 'lodash';
 import DevelopmentEnvConfig from './dev';
-import TestingEnvConfig from './test';
+import TestEnvConfig from './test';
 
 export default class Config {
     private env: string;
     private config: object;
     private development: DevelopmentEnvConfig;
-    private testing: TestingEnvConfig;
+    private test: TestEnvConfig;
 
     constructor() {
         this.env = process.env.NODE_ENV || 'development';
         this.config = { env: this.env };
         this.development = new DevelopmentEnvConfig();
-        this.testing = new TestingEnvConfig();
+        this.test = new TestEnvConfig();
     }
 
     public getConfig(): any {
@@ -22,7 +22,7 @@ export default class Config {
                 envConfig = this.development.getConfig();
                 break;
             default:
-                envConfig = this.testing.getConfig();
+                envConfig = this.test.getConfig();
                 break;
         }
         return merge(this.config, envConfig);

@@ -1,7 +1,7 @@
-export default class TestingEnvConfig {
+export default class TestEnvConfig {
     public getConfig(): object {
         return {
-            DATABASE_URL: process.env.DATABASE_DEVELOPMENT_URL,
+            DATABASE_URL: process.env.JAWSDB_URL,
         };
     }
 }
