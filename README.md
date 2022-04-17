@@ -13,7 +13,13 @@ npm i
 ## Start the server
 
 ```
-npm test
+npm run dev
+```
+
+## Run tests
+
+```
+npm run test
 ```
 
 ## Database setup
